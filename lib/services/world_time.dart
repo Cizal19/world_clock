@@ -8,6 +8,7 @@ class WorldTime {
   late String time; // time in that location
   late String flag; // url to an asset url flag icon
   late String url; // location url for api endpoint
+  late bool isDaytime; // true or false
 
   WorldTime({required this.location, required this.flag, required this.url});
 
@@ -20,15 +21,14 @@ class WorldTime {
       // print(data);
 
       // get properties from data
-      String datetime = data["datetime"].substring(0, 25); //
-      print("datetime is $datetime");
+      String datetime = data["datetime"].substring(0, 25);
 
       DateTime now = DateTime.parse(datetime);
-      print("now is $now");
+
       // set the time property
       time = DateFormat.jm().format(now);
 
-      print("time is $time");
+      isDaytime = now.hour > 6 && now.hour < 20;
     } catch (e) {
       print("caught error: $e");
       time = "could not get time data";
